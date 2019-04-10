@@ -153,7 +153,7 @@ def test_home_page_return_correct_html(self):
 
 2. Cross-Site Request Forgery exploit(CSRF) 跨站点请求伪造攻击
     * Django的CSRF保护涉及将一些自动生成的令牌放入每个生成的表单中，以便能够将POST请求识别为来自原始网站。
-    * **Django的CSRF令牌设置，在表单标签内部插入** ` {% csrf_token %} `
+    * **Django的CSRF令牌设置，在表单标签内部插入** ` {啊% csrf_token %啊} `
     * Django在渲染页面时，会使用隐藏的input域来代替CSRF令牌、该隐藏域带有CSRF令牌的信息
 
 3. render函数将第三个参数作为一个字典，它将模板中嵌入的变量名称映射到它们的值（自己给的值）：
