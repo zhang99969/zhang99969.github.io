@@ -1,3 +1,8 @@
+> 出自：[我没有三颗心脏_Blog](https://www.cnblogs.com/wmyskxz/)
+> 欣赏。
+> Origin From [我没有三颗心脏_Blog](https://www.cnblogs.com/wmyskxz/)
+> Special Appreciate.
+
 # [Spring学习(1)——快速入门](https://www.cnblogs.com/wmyskxz/p/8820371.html)
 
 ![img](https://upload-images.jianshu.io/upload_images/7896890-34e6864b15c793ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -94,7 +99,7 @@ Spring 框架是 Java 应用最广的框架，它的**成功来源于理念，�
 
 ![仅仅为一部分，下方还有一些包](https://upload-images.jianshu.io/upload_images/7896890-dada8347bc57dc1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-1. 在 Packge【pojo】下新建一个【Source】类：
+3. 在 Packge【pojo】下新建一个【Source】类：
 
 ```
 package pojo;
@@ -107,7 +112,7 @@ public class Source {
 }
 ```
 
-1. 在 【src】 目录下新建一个 【applicationContext.xml】 文件，通过 xml 文件配置的方式装配我们的 bean
+4. 在 【src】 目录下新建一个 【applicationContext.xml】 文件，通过 xml 文件配置的方式装配我们的 bean
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -123,7 +128,7 @@ public class Source {
 </beans>
 ```
 
-1. 在 Packge【test】下新建一个【TestSpring】类：
+5. 在 Packge【test】下新建一个【TestSpring】类：
 
 ```
 package test;
@@ -149,7 +154,7 @@ public class TestSpring {
 }
 ```
 
-1. 运行测试代码，可以正常拿到 xml 配置的 bean
+6. 运行测试代码，可以正常拿到 xml 配置的 bean
 
 ![img](https://upload-images.jianshu.io/upload_images/7896890-f9923130c12739cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -187,7 +192,7 @@ public class JuiceMaker {
 }
 ```
 
-1. 在 xml 文件中配置 JuiceMaker 对象：
+2. 在 xml 文件中配置 JuiceMaker 对象：
 
 - **注意：**这里要使用 ref 来**注入**另一个对象
 
@@ -208,7 +213,7 @@ public class JuiceMaker {
 </beans>
 ```
 
-1. 在 【TestSpring】 中添加如下代码：
+3. 在 【TestSpring】 中添加如下代码：
 
 ```
 package test;
@@ -238,7 +243,7 @@ public class TestSpring {
 }
 ```
 
-1. 运行测试代码：
+4. 运行测试代码：
 
 ![img](https://upload-images.jianshu.io/upload_images/7896890-ce9088fbfe46301b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -302,17 +307,17 @@ public class ProductService {
 }
 ```
 
-1. 在 xml 文件中装配该 bean：
+2. 在 xml 文件中装配该 bean：
 
 ```
 <bean name="productService" class="service.ProductService" />
 ```
 
-1. 在【TestSpring】中编写测试代码，运行：
+3. 在【TestSpring】中编写测试代码，运行：
 
 ![img](https://upload-images.jianshu.io/upload_images/7896890-c190e07d3a051a65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-1. 在 Packge【aspect】下准备日志切面 【LoggerAspect】类：
+4. 在 Packge【aspect】下准备日志切面 【LoggerAspect】类：
 
 ```
 package aspect;
@@ -328,9 +333,10 @@ public class LoggerAspect {
         return object;
     }
 }
+
 ```
 
-1. 在 xml 文件中声明业务对象和日志切面：
+5. 在 xml 文件中声明业务对象和日志切面：
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -365,9 +371,10 @@ public class LoggerAspect {
         </aop:aspect>
     </aop:config>
 </beans>
+
 ```
 
-1. 再次运行 TestSpring 中的测试代码，代码并没有改变，但是在业务方法运行之前和运行之后，都分别输出了日志信息：
+6. 再次运行 TestSpring 中的测试代码，代码并没有改变，但是在业务方法运行之前和运行之后，都分别输出了日志信息：
 
 ![img](https://upload-images.jianshu.io/upload_images/7896890-343746f0a4eb7ce0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -477,7 +484,7 @@ Spring IoC 容器的设计主要是基于以下两个接口：
 </beans>
 ```
 
-1. 这里定义了一个 bean ，这样 Spring IoC 容器在初始化的时候就能找到它们，然后使用 ClassPathXmlApplicationContext 容器就可以将其初始化：
+2. 这里定义了一个 bean ，这样 Spring IoC 容器在初始化的时候就能找到它们，然后使用 ClassPathXmlApplicationContext 容器就可以将其初始化：
 
 ```
 ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
@@ -494,22 +501,22 @@ System.out.println(source.getSize());
 
 #### ApplicationContext 常见实现类：
 
-1.**ClassPathXmlApplicationContext：**
-读取classpath中的资源
+1. **ClassPathXmlApplicationContext：**
+   读取classpath中的资源
 
 ```
 ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 ```
 
-2:**FileSystemXmlApplicationContext:-**
-读取指定路径的资源
+2. **FileSystemXmlApplicationContext:-**
+   读取指定路径的资源
 
 ```
 ApplicationContext ac = new FileSystemXmlApplicationContext("c:/applicationContext.xml");
 ```
 
-3.**XmlWebApplicationContext:**
-需要在Web的环境下才可以运行
+3. **XmlWebApplicationContext:**
+   需要在Web的环境下才可以运行
 
 ```
 XmlWebApplicationContext ac = new XmlWebApplicationContext(); // 这时并没有初始化容器
@@ -539,13 +546,13 @@ ac.refresh(); // 初始化容器
 **注意：**Bean 的定义和初始化在 Spring IoC 容器是两大步骤，它是先定义，然后初始化和依赖注入的。
 
 - **Bean 的定义分为 3 步：**
-  1.Resource 定位
-  Spring IoC 容器先根据开发者的配置，进行资源的定位，在 Spring 的开发中，通过 XML 或者注解都是十分常见的方式，定位的内容是由开发者提供的。
-  2.BeanDefinition 的载入
-  这个时候只是将 Resource 定位到的信息，保存到 Bean 定义（BeanDefinition）中，此时并不会创建 Bean 的实例
-  3.BeanDefinition 的注册
-  这个过程就是将 BeanDefinition 的信息发布到 Spring IoC 容器中
-  **注意：**此时仍然没有对应的 Bean 的实例。
+  1. Resource 定位
+     Spring IoC 容器先根据开发者的配置，进行资源的定位，在 Spring 的开发中，通过 XML 或者注解都是十分常见的方式，定位的内容是由开发者提供的。
+  2. BeanDefinition 的载入
+     这个时候只是将 Resource 定位到的信息，保存到 Bean 定义（BeanDefinition）中，此时并不会创建 Bean 的实例
+  3. BeanDefinition 的注册
+     这个过程就是将 BeanDefinition 的信息发布到 Spring IoC 容器中
+     **注意：**此时仍然没有对应的 Bean 的实例。
 
 做完了以上 3 步，Bean 就在 Spring IoC 容器中被定义了，而没有被初始化，更没有完成依赖注入，也就是没有注入其配置的资源给 Bean，那么它还不能完全使用。
 
@@ -593,19 +600,19 @@ ac.refresh(); // 初始化容器
 
 在现实的工作中，这 3 种方式都会被用到，并且在学习和工作之中常常混合使用，所以这里给出一些关于这 3 种优先级的建议：
 
-1.**最优先：通过隐式 Bean 的发现机制和自动装配的原则。**
-基于约定由于配置的原则，这种方式应该是最优先的
+1. **最优先：通过隐式 Bean 的发现机制和自动装配的原则。**
+   基于约定由于配置的原则，这种方式应该是最优先的
 
 - **好处：**减少程序开发者的决定权，简单又不失灵活。
 
-2.**其次：Java 接口和类中配置实现配置**
-在没有办法使用自动装配原则的情况下应该优先考虑此类方法
+2. **其次：Java 接口和类中配置实现配置**
+   在没有办法使用自动装配原则的情况下应该优先考虑此类方法
 
 - **好处：**避免 XML 配置的泛滥，也更为容易。
 - **典型场景：**一个父类有多个子类，比如学生类有两个子类，一个男学生类和女学生类，通过 IoC 容器初始化一个学生类，容器将无法知道使用哪个子类去初始化，这个时候可以使用 Java 的注解配置去指定。
 
-3.**最后：XML 方式配置**
-在上述方法都无法使用的情况下，那么也只能选择 XML 配置的方式。
+3. **最后：XML 方式配置**
+   在上述方法都无法使用的情况下，那么也只能选择 XML 配置的方式。
 
 - **好处：**简单易懂（当然，特别是对于初学者）
 - **典型场景：**当使用第三方类的时候，有些类并不是我们开发的，我们无法修改里面的代码，这个时候就通过 XML 的方式配置使用了。
@@ -818,6 +825,7 @@ public class Student {
     }
     // setter and getter
 }
+
 ```
 
 在 c-命名空间和模式声明之后，我们就可以使用它来声明构造器参数了：
@@ -832,6 +840,7 @@ public class Student {
 <!-- 引入 c-命名空间之后 -->
 <bean name="student2" class="pojo.Student"
       c:id="2" c:name="学生2"/>
+
 ```
 
 c-命名空间属性名**以 “c:” 开头**，也就是命名空间的前缀。接下来就是**要装配的构造器参数名**，在此之后如果需要注入对象的话则要跟上 `-ref`（如`c:card-ref="idCard1"`，则对 card 这个构造器参数注入之前配置的名为 idCard1 的 bean）
@@ -843,6 +852,7 @@ c-命名空间属性名**以 “c:” 开头**，也就是命名空间的前缀�
 ```
 <bean name="student2" class="pojo.Student"
       c:_0="3" c:_1="学生3"/>
+
 ```
 
 我们将参数的名称替换成了 “0” 和 “1” ，也就是参数的索引。因为在 XML 中不允许数字作为属性的第一个字符，因此必须要添加一个下划线来作为前缀。
@@ -865,6 +875,7 @@ c-命名空间通过构造器注入的方式来配置 bean，p-命名空间则�
 <!-- 引入p-命名空间之后 -->
 <bean name="student2" class="pojo.Student" 
       p:id="2" p:name="学生2"/>
+
 ```
 
 我们需要先删掉 Student 类中的构造函数，不然 XML 约束会提示我们配置 `<constructor-arg>` 元素。
@@ -874,6 +885,7 @@ c-命名空间通过构造器注入的方式来配置 bean，p-命名空间则�
 ```
     <bean name="student2" class="pojo.Student"
           p:id="2" p:name="学生2" p:cdCard-ref="cdCard1"/>
+
 ```
 
 ##### ——【③ util-命名空间】——
@@ -898,6 +910,7 @@ c-命名空间通过构造器注入的方式来配置 bean，p-命名空间则�
     <ref bean="bean1"/>
     <ref bean="bean2"/>
 </util:list>
+
 ```
 
 `<util:list>` 只是 util-命名空间中的多个元素之一，下表提供了 util-命名空间提供的所有元素：
@@ -918,15 +931,15 @@ c-命名空间通过构造器注入的方式来配置 bean，p-命名空间则�
 - **解决方案：**让 applicationContext.xml 文件包含其他配置文件即可
   使用 `<import>` 元素引入其他配置文件
 
-1.在【src】文件下新建一个 bean.xml 文件，写好基础的约束，把 applicationContext.xml 文件中配置的 `<bean>` 元素复制进去
-
-2.在 applicationContext.xml 文件中写入：
+1. 在【src】文件下新建一个 bean.xml 文件，写好基础的约束，把 applicationContext.xml 文件中配置的 `<bean>` 元素复制进去
+2. 在 applicationContext.xml 文件中写入：
 
 ```
 <import resource="bean.xml" />
+
 ```
 
-3.运行测试代码，仍然能正确获取到 bean:
+3. 运行测试代码，仍然能正确获取到 bean:
 
 ![img](https://upload-images.jianshu.io/upload_images/7896890-9636b07a81db1c16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -937,8 +950,8 @@ c-命名空间通过构造器注入的方式来配置 bean，p-命名空间则�
 上面，我们已经了解了如何使用 XML 的方式去装配 Bean，但是更多的时候已经不再推荐使用 XML 的方式去装配 Bean，更多的时候回考虑使用注解（annotation） 的方式去装配 Bean。
 
 - **优势：**
-  1.可以减少 XML 的配置，当配置项多的时候，臃肿难以维护
-  2.功能更加强大，既能实现 XML 的功能，也提供了自动装配的功能，采用了自动装配后，程序猿所需要做的决断就少了，更加有利于对程序的开发，这就是“约定由于配置”的开发原则
+  1. 可以减少 XML 的配置，当配置项多的时候，臃肿难以维护
+  2. 功能更加强大，既能实现 XML 的功能，也提供了自动装配的功能，采用了自动装配后，程序猿所需要做的决断就少了，更加有利于对程序的开发，这就是“约定由于配置”的开发原则
 
 在 Spring 中，它提供了两种方式来让 Spring IoC 容器发现 bean：
 
@@ -1006,6 +1019,7 @@ public class StudentConfig {
 ApplicationContext context = new AnnotationConfigApplicationContext(StudentConfig.class);
 Student student = (Student) context.getBean("student1", Student.class);
 student.printInformation();
+
 ```
 
 这里可以看到使用了 AnnotationConfigApplicationContext 类去初始化 Spring IoC 容器，它的配置项是 StudentConfig 类，这样 Spring IoC 就会根据注解的配置去解析对应的资源，来生成 IoC 容器了。
@@ -1037,6 +1051,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackageClasses = pojo.Student.class)
 public class StudentConfig {
 }
+
 ```
 
 验证都能通过，bingo！
@@ -1050,7 +1065,7 @@ public class StudentConfig {
 
 所谓自动装配技术是一种**由 Spring 自己发现对应的 Bean，自动完成装配工作的方式，**它会应用到一个十分常用的注解 `@Autowired` 上，这个时候 **Spring 会根据类型去寻找定义的 Bean 然后将其注入**，听起来很神奇，让我们实际来看一看：
 
-1.先在 Package【service】下创建一个 StudentService 接口：
+1. 先在 Package【service】下创建一个 StudentService 接口：
 
 ```
 package service;
@@ -1058,11 +1073,12 @@ package service;
 public interface StudentService {
     public void printStudentInfo();
 }
+
 ```
 
 使用接口是 Spring 推荐的方式，这样可以更为灵活，可以将定义和实现分离
 
-2.为上面的接口创建一个 StudentServiceImp 实现类：
+2. 为上面的接口创建一个 StudentServiceImp 实现类：
 
 ```
 package service;
@@ -1083,11 +1099,12 @@ public class StudentServiceImp implements StudentService {
         System.out.println("学生的 name 为：" + student.getName());
     }
 }
+
 ```
 
 该实现类实现了接口的 printStudentInfo() 方法，打印出成员对象 student 的相关信息，这里的 `@Autowired` 注解，表示**在 Spring IoC 定位所有的 Bean 后，这个字段需要按类型注入**，这样 IoC 容器就会**寻找资源**，然后将其注入。
 
-3.编写测试类：
+3. 编写测试类：
 
 ```
 // 第一步：修改 StudentConfig 类，告诉 Spring IoC 在哪里去扫描它：
@@ -1121,6 +1138,7 @@ public class TestSpring {
         studentService.printStudentInfo();
     }
 }
+
 ```
 
 运行代码：
@@ -1185,14 +1203,15 @@ public class JuiceMaker {
         this.source = source;
     }
 }
+
 ```
 
 #### 使用@Bean 装配 Bean
 
 - **问题：** 以上都是通过 `@Component` 注解来装配 Bean ，并且只能注解在类上，当你需要引用第三方包的（jar 文件），而且往往并没有这些包的源码，这时候将无法为这些包的类加入 `@Component` 注解，让它们变成开发环境中的 Bean 资源。
 - **解决方案：**
-  1.自己创建一个新的类来扩展包里的类，然后再新类上使用 `@Component` 注解，**但这样很 low**
-  2.**使用 @Bean 注解，注解到方法之上**，使其成为 Spring 中返回对象为 Spring 的 Bean 资源。
+  1. 自己创建一个新的类来扩展包里的类，然后再新类上使用 `@Component` 注解，**但这样很 low**
+  2. **使用 @Bean 注解，注解到方法之上**，使其成为 Spring 中返回对象为 Spring 的 Bean 资源。
 
 我们在 Package【pojo】 下新建一个用来测试 `@Bean` 注解的类：
 
@@ -1211,6 +1230,7 @@ public class BeanTester {
         return str;
     }
 }
+
 ```
 
 - **注意：** `@Configuration` 注解相当于 XML 文件的根元素，**必须要**，有了才能解析其中的 `@Bean` 注解
@@ -1353,7 +1373,7 @@ AOP能够将那些与业务无关，**却为业务模块所共同调用的逻辑
 
 我们来实际的用代码感受一下
 
-1.在 Package【pojo】下新建一个【Landlord】类（我百度翻译的包租婆的英文）：
+1. 在 Package【pojo】下新建一个【Landlord】类（我百度翻译的包租婆的英文）：
 
 ```
 package pojo;
@@ -1371,7 +1391,7 @@ public class Landlord {
 }
 ```
 
-2.在 Package【aspect】下新建一个中介商【Broker】类（我还是用的翻译...）：
+2. 在 Package【aspect】下新建一个中介商【Broker】类（我还是用的翻译...）：
 
 ```
 package aspect;
@@ -1398,7 +1418,7 @@ class Broker {
 }
 ```
 
-3.在 applicationContext.xml 中配置自动注入，并告诉 Spring IoC 容器去哪里扫描这两个 Bean：
+3. 在 applicationContext.xml 中配置自动注入，并告诉 Spring IoC 容器去哪里扫描这两个 Bean：
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1414,9 +1434,10 @@ class Broker {
 
     <aop:aspectj-autoproxy/>
 </beans>
+
 ```
 
-4.在 Package【test】下编写测试代码：
+4. 在 Package【test】下编写测试代码：
 
 ```
 package test;
@@ -1436,9 +1457,10 @@ public class TestSpring {
 
     }
 }
+
 ```
 
-5.执行看到效果：
+5. 执行看到效果：
 
 ![img](https://upload-images.jianshu.io/upload_images/7896890-a7dc802dcfd2f1a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -1462,6 +1484,7 @@ Spring 是方法级别的 AOP 框架，我们主要也是以某个类额某个�
         System.out.println("收房租");
     }
     ....
+
 ```
 
 我们在这里就选择上述 Landlord 类中的 service() 方法作为连接点。
@@ -1493,6 +1516,7 @@ class Broker {
         System.out.println("交钥匙");
     }
 }
+
 ```
 
 - **注意：** 被定义为切面的类仍然是一个 Bean ，需要 `@Component` 注解标注
@@ -1605,6 +1629,7 @@ class Broker {
         System.out.println("交钥匙");
     }
 }
+
 ```
 
 运行测试代码，结果仍然正确：
@@ -1648,6 +1673,7 @@ class Broker {
         <aop:around pointcut-ref="landlordPoint" method="around"/>
     </aop:aspect>
 </aop:config>
+
 ```
 
 运行测试程序，看到正确结果：
@@ -2126,3 +2152,8 @@ public void delete(int id) {
 > github：[wmyskxz](https://github.com/wmyskxz/)
 > 欢迎关注公众微信号：wmyskxz_javaweb
 > 分享自己的Java Web学习之路以及各种Java学习资料
+
+> 点击[我没有三颗心脏_Blog](https://www.cnblogs.com/wmyskxz/)留下你的评论
+> 欣赏。
+> Your text at [我没有三颗心脏_Blog](https://www.cnblogs.com/wmyskxz/)
+> Special Appreciate.
