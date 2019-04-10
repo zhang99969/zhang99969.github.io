@@ -205,6 +205,7 @@ def test_home_page_return_correct_html(self):
 2. `request.POST['item_text']`返回的是一个字典对象、该对象可以使用get方法
 
 3. Django的model可以使用save()、count()方法来查询对象的信息，与保存对象(修改)、示例：
+
    ```python
        second_item = Item()
        second_item.text = 'Item the second'
@@ -212,7 +213,78 @@ def test_home_page_return_correct_html(self):
        saved_items = Item.objects.all()
        self.assertEqual(saved_items.count(), 2)
     ```
-    
+
+# 第六节 数据库测试
+
+#### 知识性收获
+1. 对于任何的request，不要将空的item存储至model中。
+    * 所以这样的代码是不应该在view中被发现的：`item.text = request.POST.get('item_text', '')`
+2. **最好让单元测试每一次测试一件事情**，所以当一个单元测试过长时，就要考虑将他拆分成多个单元测试了。
+3. **俗话说的好，在服务器在响应了POST请求后，最好重定向**。
+    * 视图函数有两个工作要完成：*处理用户输入*和*返回适当的响应*。
+    * 用户提交post请求大部分都是要将数据存进数据库中。
+    * 有了更新后的数据库，我们就可以使用get去刷新有着新数据的新页面了。
+    * 所以我们应该从定向去执行get请求而不是将处理后的数据返回(如果get请求无法呈现数据库中的数据，而是必须用请求返回的数据渲染页面，那么这个应用就太笨拙了)。
+4. **Setup，Exercise，Assert是单元测试的典型结构。**
+    * 经典的单元测试由三部分构成
+    * Setup：设置数据项、或者建立要测试的数据
+    * Exercise：处理这些数据
+    * Assert：**判断处理结果是否符合预期**
+    * 例子：
+
+```python
+    def test_displays_all_list_items(self):
+        Item.objects.create(text='itemey 1')
+        Item.objects.create(text='itemey 2')
+        response = self.client.get('/')
+        self.assertIn('itemey 1', response.content.decode())
+        self.assertIn('itemey 2', response.content.decode())
+```
+5. 通过migrate创建我们的生产数据库。
+    *  **单元测试的数据库会在测试过后删除**、与实际应用、功能测试中不同。
+    *  单元测试中每一个以“test_”开头的函数都会**清空数据库、从新开始。**
+    *  **单元测试用的迁移数据库命令和功能测试与实际生产中数据库迁移命令不同**：
+        *  单元测试：`python manage.py makemigrations`
+        *  功能测试：`python manage.py migrate`
+    * **与单元测试不同的是，功能测试不会在每一次的测试后清空数据库。**
+6. 实际的数据库在工程目录下的db.sqlite3文件中，在settings.py中有如下配置:
+
+```python
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+```
+
+
+#### 需要记住的代码
+1. Django在view中重定向的代码：`redirect('/')`
+2. 重定向时，response返回的code是302，location属性是重定向的url
+
+```python
+self.assertEqual(response.status_code, 302) 
+self.assertEqual(response['location'], '/')
+```
+
+3. 生产数据库的迁移命令：`python manage.py migrate`
+4. 删除数据库、重新迁移的命令：
+    * `rm db.sqlite3` 注：windows可能需要停止服务器
+    * `python manage.py migrate --noinput`
+5. git tag命令可以标记一些信息
+6. Django模板标签：
+    1. {% csrf_token %}，详情见第五节的第二个知识点
+    2. {% for ... endfor %}，可以在模板的html中动态渲染数据，如后面的代码：
+    3. {{ forloop.counter }}可以记录循环的次数
+
+```html
+{% for item in items %}
+    <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+{% endfor %}
+```
+
+
     
 > 点击[HalfClock_Blog](https://halfclock.github.io/about/)留下你的评论
 > 欣赏。
