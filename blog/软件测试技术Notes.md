@@ -274,7 +274,7 @@ self.assertEqual(response['location'], '/')
     * `python manage.py migrate --noinput`
 5. git tag命令可以标记一些信息
 6. Django模板标签：
-    1. {% csrf_token %}，详情见第五节的第二个知识点
+    1. {啊% csrf_token %啊}，详情见第五节的第二个知识点
     2. {% for ... endfor %}，可以在模板的html中动态渲染数据，如后面的代码：
     3. {{ forloop.counter }}可以记录循环的次数
 
