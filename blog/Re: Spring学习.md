@@ -2260,6 +2260,7 @@ public class HelloController {
 ## 解析 Spring Boot 项目
 
 > 这一部分参考自：[Spring Boot干货系列（一）优雅的入门篇 ——嘟嘟独立博客](http://tengj.top/2017/02/26/springboot1/)
+
 #### 解析 pom.xml 文件
 
 让我们来看看默认生成的 pom.xml 文件中到底有一些什么特别：
@@ -2341,6 +2342,7 @@ Spring Boot 不仅支持常规的 properties 配置文件，还支持 yaml 语�
 Spring Boot 的全局配置文件的作用是对一些默认配置的配置值进行修改。
 
 >- 简单实例一下
+
 ![](https://upload-images.jianshu.io/upload_images/7896890-bcd65f7469b06608.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 我们同样的将 Tomcat 默认端口设置为 8080 ，并将默认的访问路径从 “`/`” 修改为 “`/hello`” 时，使用 properties 文件和 yml 文件的区别如上图。
@@ -2348,6 +2350,7 @@ Spring Boot 的全局配置文件的作用是对一些默认配置的配置值�
 - 注意： yml 需要在 “`:`” 后加一个空格，幸好 IDEA 很好地支持了 yml 文件的格式有良好的代码提示；
 
 >- 我们可以自己配置多个属性
+
 我们直接把 .properties 后缀的文件删掉，使用 .yml 文件来进行简单的配置，然后使用 @Value 来获取配置属性：
 
 ![](https://upload-images.jianshu.io/upload_images/7896890-0e808a82254d6a4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -2370,6 +2373,7 @@ Spring Boot 的全局配置文件的作用是对一些默认配置的配置值�
 - **问题：** 这样写配置文件繁琐而且可能会造成类的臃肿，因为有许许多多的 @Value 注解。
 
 >- 封装配置信息
+
 ![](https://upload-images.jianshu.io/upload_images/7896890-2599817d8f2f50d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 我们可以把配置信息封装成一个类，首先在我们的 name 和 age 前加一个 student 前缀，然后新建一个 StudentProperties 的类用来封装这些信息，并用上两个注解：
@@ -2386,6 +2390,7 @@ Spring Boot 的全局配置文件的作用是对一些默认配置的配置值�
 在目前的 Spring Boot 项目中，当发生了任何修改之后我们都需要重新启动才能够正确的得到效果，这样会略显麻烦，Spring Boot 提供了热部署的方式，当发现任何类发生了改变，就会通过 JVM 类加载的方式，加载最新的类到虚拟机中，这样就不需要重新启动也能看到修改后的效果了。
 
 >- 做法也很简单，修改 pom.xml 即可！
+
 我们往 pom.xml 中添加一个依赖就可以了：
 
 ```
@@ -2401,6 +2406,7 @@ Spring Boot 的全局配置文件的作用是对一些默认配置的配置值�
 ![](https://upload-images.jianshu.io/upload_images/7896890-cec869956c3cf158.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > 关于如何在 IDEA 中配置热部署：[传送门](https://blog.csdn.net/xusheng_Mr/article/details/78771746)
+
 --- 
 
 ## Spring Boot 使用
@@ -2412,6 +2418,7 @@ Spring Boot 的全局配置文件的作用是对一些默认配置的配置值�
 Spring Boot 的默认视图支持是 Thymeleaf 模板引擎，但是这个我们不熟悉啊，我们还是想要使用 JSP 怎么办呢？
 
 >- 第一步：修改 pom.xml 增加对 JSP 文件的支持
+
 ```
 <!-- servlet依赖. -->
 <dependency>
@@ -2432,21 +2439,25 @@ Spring Boot 的默认视图支持是 Thymeleaf 模板引擎，但是这个我们
 ```
 
 >- 第二步：配置试图重定向 JSP 文件的位置
+
 修改 application.yml 文件，将我们的 JSP 文件重定向到 /WEB-INF/views/ 目录下：
 
 ![](https://upload-images.jianshu.io/upload_images/7896890-7c17f7e10cfb2629.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 >- 第三步：修改 HelloController
+
 修改 @RestController 注解为 @Controller ，然后将 hello 方法修改为：
 
 ![](https://upload-images.jianshu.io/upload_images/7896890-2dc2c39cd962edc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 >- 第四步：新建 hello.jsp 文件
+
 在【src/main】目录下依次创建 webapp、WEB-INF、views 目录，并创建一个 hello.jsp 文件：
 
 ![](https://upload-images.jianshu.io/upload_images/7896890-a180556d7ead9605.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 >- 第五步：刷新网页
+
 因为我们部署了热部署功能，所以只需要等待控制台重启信息完成之后再刷新网页就可以看到正确效果了：
 
 ![](https://upload-images.jianshu.io/upload_images/7896890-cfd20f747ffca978.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -2458,8 +2469,8 @@ Spring Boot 的默认视图支持是 Thymeleaf 模板引擎，但是这个我们
 #### 集成 MyBatis 
 
 >- 第一步：修改 pom.xml 增加对 MySql和 MyBatis 的支持
+
 ```
- 
 <!-- mybatis -->
 <dependency>
 	<groupId>org.mybatis.spring.boot</groupId>
@@ -2475,11 +2486,13 @@ Spring Boot 的默认视图支持是 Thymeleaf 模板引擎，但是这个我们
 ```
 
 >- 第二步：新增数据库链接参数
+
 这里我们就直接使用之前创建好的 student 表了吧：
 
 ![](https://upload-images.jianshu.io/upload_images/7896890-1eda563cfdfbae65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 >- 第三步：创建 Student 实体类和 StudentMapper 映射类
+
 在【cn.wmyskxz.springboot】下新建一个【pojo】包，然后在其下创建一个 Student 类：
 
 ```
@@ -2510,6 +2523,7 @@ public interface StudentMapper {
 ```
 
 >- 第四步：编写 StudentController
+
 在【cn.wmyskxz.springboot】下新建一个【controller】包，然后在其下创建一个 StudentController ：
 
 ```
@@ -2541,6 +2555,7 @@ public class StudentController {
 ```
 
 > 第五步：编写 listStudent.jsp 文件
+
 我们简化一下 JSP 的文件，仅显示两个字段的数据：
 
 ```
@@ -2562,6 +2577,7 @@ public class StudentController {
 ```
 
 >- 第六步：重启服务器运行
+
 因为往 pom.xml 中新增加了依赖的包，所以自动重启服务器没有作用，我们需要手动重启一次，然后在地址输入：localhost:8080/listStudent 查看效果：
 
 ![](https://upload-images.jianshu.io/upload_images/7896890-5fd3c075d07b5840.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -2572,8 +2588,12 @@ public class StudentController {
 #### 参考资料：
 how2j.cn-Spring Boot 系列教程
 
----
-
+------
+> 欢迎转载，转载请注明出处！
+> 简书ID：[@我没有三颗心脏](https://www.jianshu.com/u/a40d61a49221)
+> github：[wmyskxz](https://github.com/wmyskxz/)
+> 欢迎关注公众微信号：wmyskxz_javaweb
+> 分享自己的Java Web学习之路以及各种Java学习资料
 
 
 > 点击[我没有三颗心脏_Blog](https://www.cnblogs.com/wmyskxz/)留下你的评论
