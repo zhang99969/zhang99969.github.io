@@ -1,3 +1,22 @@
+## iOS中使用Stream
+
+#### 1. 下载和安装
+
+(1) 下载Stream
+(2) 同意使用vpn
+(3) 跳转到浏览器下载证书
+(4) 打开设置-通用-描述文件，安转下载好的 Stream Generated CA 描述文件
+(5) 打开设置-通用-关于本机-证书信任设置 开启针对根证书启动完全信任
+
+#### 2. 开始抓包
+
+#### 3. 抓包处理
+
+(1) 点击抓包历史，进入历史记录。可以通过右上角放大镜图标筛选文件，如JSON类型。
+(2) 点击某JSON文件，点击上侧相应，在相应主体中选择查看相应，得到JSON文件的具体内容。可点击右上角分享按钮进行拷贝。
+
+------
+
 
 > 出自：[Edward_is_1ncredible _Blog](https://blog.csdn.net/Edward_is_1ncredible/article/details/84023572)
 > 欣赏。
@@ -7,7 +26,7 @@
 ## [Python爬虫] 7-Charles抓取微信小程序
 最近在尝试抓取微信的小程序，用到了Charles，微信小程序的话需要使用HTTPS抓包，网上有些教程内容有步骤的缺失，所以重新整理一份傻瓜式的教程，环境WIN10+IOS，内容基于Roy_Liang前辈：https://www.jianshu.com/p/5539599c7a25：
 
-#### 1.Charles安装
+#### 1. Charles安装
 官网下载安装Charles:https://www.charlesproxy.com/download/
 
 #### 2. HTTPS抓包准备工作
@@ -51,7 +70,7 @@ Charles：Proxy->SSL Proxying-> Add ：Host：*，Port：443
 > Your text at [Edward_is_1ncredible _Blog](https://blog.csdn.net/Edward_is_1ncredible/article/details/84023572)
 > Special Appreciate.
 
-
+------
 
 > 出自：[Roy_Liang_Blog](https://www.jianshu.com/p/5539599c7a25)
 > 欣赏。
@@ -64,7 +83,6 @@ Charles：Proxy->SSL Proxying-> Add ：Host：*，Port：443
 - HTTP抓包
 - HTTPS抓包
 
-------
 #### 1. Charles安装
 
 官网下载安装Charles:
