@@ -174,7 +174,7 @@ def test_home_page_return_correct_html(self):
     
 2. Cross-Site Request Forgery exploit(CSRF) 跨站点请求伪造攻击
     * Django的CSRF保护涉及将一些自动生成的令牌放入每个生成的表单中，以便能够将POST请求识别为来自原始网站。
-    * **Django的CSRF令牌设置，在表单标签内部插入** ` {啊% csrf_token %} `
+    * **Django的CSRF令牌设置，在表单标签内部插入** ` {啊% csrf_token %啊} `
     * Django在渲染页面时，会使用隐藏的input域来代替CSRF令牌、该隐藏域带有CSRF令牌的信息
     
 3. render函数将第三个参数作为一个字典，它将模板中嵌入的变量名称映射到它们的值（自己给的值）：
@@ -303,14 +303,14 @@ self.assertEqual(response['location'], '/')
     * `python manage.py migrate --noinput`
 5. git tag命令可以标记一些信息
 6. Django模板标签：
-    1. {啊% csrf_token %}，详情见第五节的第二个知识点
-    2. {啊% for ... endfor %}，可以在模板的html中动态渲染数据，如后面的代码：
+    1. {啊% csrf_token %啊}，详情见第五节的第二个知识点
+    2. {啊% for ... endfor %啊}，可以在模板的html中动态渲染数据，如后面的代码：
     3. {{ forloop.counter }}可以记录循环的次数
 
 ```html
-{啊% for item in items %}
+{啊% for item in items %啊}
     <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
-{啊% endfor %}
+{啊% endfor %啊}
 ```
 
 # 第七节 改进功能测试
@@ -438,6 +438,7 @@ self.assertEqual(response['location'], '/')
         * 这里的工作状态是指之前的测试用例通过、也就是增加新功能时，回归测试通过。
     2. 将工作分成小的，可实现的任务。
     3. 遵循 YAGNI 法则，不开发没有必要的功能使代码变得臃肿。
+
 ### 需要记住的代码
 1. 数据库 Model 中的外键代码:`models.ForeignKey(ForeignClass, default=None)`
 2. Model 中的每一类都可以使用 `ClassName.objects.get(id=object_id)` 函数进行查找并拿到指定 id 的对象。
@@ -445,7 +446,95 @@ self.assertEqual(response['location'], '/')
 4. Model 中的每一类都可以使用 `ClassName.objects.filter(AttributeName = attr)`函数进行筛查查出数据库里该类的所有对象中**某属性 == attr 的所有对象**，并**返回集合**
 5. **.item_set称为反向查找**：它是Django令人难以置信的ORM之一，可让您从不同的表中查找对象的相关项目，例如：`for item in list.item_set.all`
 
+## 第十节 布局和样式测试
+### 知识性收获
+1. **TDD 不应该测试美学(玄学）、但是我们可以测试我们美学的实施**（让我们自己确信代码是有效的），例如：我们可以快速检查主输入框是否按照我们在每个页面上的方式对齐，这将使我们相信该页面的其余样式也可能已加载。 本节讲述了**如何进行冒烟测试**、以及如何在 Django 中**正确的、****高效的**加载静态文件。（包括：运行、测试、部署）
 
+2. **冒烟测试（smoke test）**
+    1. 检查您的静态文件和CSS是否正常工作
+3. **Django 模板继承**
+    1. **Django模板语言使模板继承变得容易。**
+    2. **目的：**减少重复代码
+    3. 使用模板继承：
+        1. 在**模板“父类”里使用**`{啊% block 变量名%}{啊% endblock %}`代表字符串、变量等 python 变量的**占位符。**
+        2. 在**模板的子类中**使用`{啊% extends '父类模板名称.html' %}`**加载“父类”模板**
+        3. 使用 `{啊% block 变量名%} 实际的变量/代码段 {啊% endblock %}` **代替模板“父类”中的变量占位符。**
+4. **Django及任何Web服务器都需要知道处理静态文件的两件事：**
+    1. **如何判断 URL 请求何时用于静态文件，而不是用于通过视图函数(view)提供的某些HTML。(url 映射的 view)**
+        1. Django 允许我们定义一个 URL “前缀”，表示任何以该前缀开头的URL都应被视为对静态文件的请求。默认情况下，前缀为`/static/`。它在 settings.py 中定义。`STATIC_URL = '/static/'`
+    2. **在哪里找到用户想要的静态文件。**
+        1. 当我们使用 Django 开发服务器（`manage.py runserver`）时，我们可以依靠 Django 为我们神奇地找到静态文件 - 它只会查看我们的一个名为 static 的**应用程序(app -> list)的** *任何* 子文件夹(list/static)。
+5. **虽然 `runserver` 自动找到静态文件，但 `LiveServerTestCase` 却不会（运行服务会、但是测试确不会）**
+    **解决办法：**
+        * 将 `LiveServerTestCase` 改成 `StaticLiveServerTestCase`
+5. **从各种应用程序文件夹中收集所有静态文件**
+    1. 当你在一个真正的Web服务器上运行时，你不希望 Django 使用 Python 来提供原始文件的静态内容，**因为这样是缓慢而低效的**，而**像 Apache 或 Nginx 这样的 Web 服务器可以完成这一切。**
+    2. 静态文件文件夹不应该将它置于源代码的目录之下。
+    3. **出于 1、2 中的原因**，您希望能够从各种应用程序文件夹中**收集所有静态文件**，并将它们复制到一个位置，**以便进行部署**。这就是 `collectstatic` 命令的用途。
+    4. 收集的静态文件所在的位置在 settings.py 中定义为 `STATIC_ROOT`，具体如下:
+```python
+STATIC_URL = '/static/'  
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
+## “..” 是指项目文件夹的上级目录
+```
+
+    1. 配置好以后、使用 `python manage.py collectstatic` 进行自动化收集工作。
+ 
+
+### 需要记住的代码
+
+1. 收集的静态文件所在的位置在 settings.py 中定义为 `STATIC_ROOT`，具体如下:
+```python
+STATIC_URL = '/static/'  
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
+## “..” 是指项目文件夹的上级目录
+```
+2. 使用 `python manage.py collectstatic` 进行自动化收集工作。
+
+## 第十一节 使用阶段服务器测试部署
+### 知识性收获
+
+1. **为什么需要进行部署测试？**
+    1. 在与生站点(producer)相同的基础架构上使用暂存站(staging server)点可以**帮助我们测试我们的部署并在我们进入“真实”站点之前做好准备。**
+    2. 我们还可以针对**临时站点运行我们的功能测试**。这将使我们放心，我们在服务器上拥有正确的代码和软件包，并且由于我们现在对我们的站点布局进行了“冒烟测试”，我们将知道CSS 已正确加载。
+    3. 就像在我们自己的 PC 上一样，当您运行多个 Python 应用程序时，**virtualenv** 在服务器上用于管理包和依赖项非常有用。
+    4. 最后，通过使用**自动脚本来部署新版本，并使用相同的脚本部署到分段和生产**，我们可以向自己保证，尽可能多地进行分段。
+2. **怎么使用本地测试代码测试服务器？**
+    1. 在命令行添加一个变量并赋值为服务器的 IP：`STAGING_SERVER= python 47.94.248.236 manage.py test functional_tests`、这里存储的变量是 STAGING_SERVER ，服务器 ip 是 47.94.248.236。
+    2. 在测试代码中检查是否填写了此变量、若填写了、将测试 url 改成 `'http://' + staging_server`、完整代码见下：
+    
+```python
+class NewVisitorTest(StaticLiveServerTestCase):
+
+    def setUp(self):
+        self.browser = webdriver.Chrome()
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
+```
+1. **配置与部署的区别**
+    1. 配置通常需要 root 权限，而部署通常不依赖 root 账户
+2. **站点文件夹安排指导**
+    1. 每个站点（网站）**都应该有自己的文件夹**。
+        1. 我们分别有一个单独的文件夹，存储源代码，数据库和静态文件。
+        2. 逻辑是，虽然源代码可能会从站点的一个版本更改为下一个版本，但数据库将保持不变。
+        3. 最后，virtualenv 也需要设置自己的子文件夹
+    2. ![](/images/15590561543622.jpg)
+3. **使用 virtualenv 管理环境**时，可以使用 `requirement.txt` 储存我们需要的包、需要时使用 `virtualenv/bin/pip install -r requirement.txt` 即可全部安装。
+4. nginx 的配置文件储存在 `/etc/nginx/sites-enabled`中，通常这里的文件夹储存的文件是`/etc/nginx/sites-available`文件的软连接。
+5. **服务器调试技巧**
+    1. Nginx错误日志在/var/log/nginx/error.log。
+    2. 可以使用 nginx -t “检查”它的配置
+    3. 确保您的浏览器没有缓存过时的响应。使用Ctrl-Refresh，或启动新的私人浏览器窗口。
+    4. 有时会在服务器上看到莫名其妙的行为，只有在使用 sudo 完全重新启动它时才能解决。
+
+### 需要记住的代码
+1. 使用 virtualenv 管理环境时，可以使用 `requirement.txt` 储存我们需要的包、需要时使用 `virtualenv/bin/pip install -r requirement.txt` 即可全部安装。
+
+## 第十二节 部署生产服务器
+### 知识性收获
+
+### 需要记住的代码
     
 > 点击[HalfClock_Blog](https://halfclock.github.io/about/)留下你的评论
 > 欣赏。
