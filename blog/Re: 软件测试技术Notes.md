@@ -542,7 +542,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 1. **Gunicorn 是一个实现了 uwsgi 协议与 WSGI 协议两种协议的 WEB 服务器。**他的作用，简单来讲就是**使用 uwsgi 协议与其他 WEB 服务器(nginx/apache)进行通信。****使用 WSGI 于 WEB 框架（Flask/Django）进行通讯。**
 
 2. **Gunicorn、Nginx、Django 的关系如下图**：
-    ![未命名文件](/images/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png)
+    ![未命名文件](https://github.com/HalfClock/software_test/raw/master/images/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png)
     1. Nginx 负责接收 http 请求，**如果请求是静态文件**，那么直接根据 URI 返回静态文件，**如果是请求 WEB 应用数据**，那么将请求转发给 Gunicorn Web 服务器。
     2. Gunicorn 接收 socket 消息后将信息转发给 WEB 应用程序(Django)。
     3. Django 处理信息，返回 HTTP 响应，将之返回给 Gunicorn，Gunicorn 再返回给Nginx，Nginx 进行打包将 HHTTP 响应发送给用户。
